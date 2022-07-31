@@ -1,0 +1,24 @@
+name: Actions workflow
+
+on: [push]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run shell command
+        run: echo "hello world"
+
+      - name: Run multiple shell command
+        run: |
+          echo "hello 2"
+          pwd
+
+      - name: run on action
+        uses: action/checkout@v3
+
+  run-something-else:
+    runs-on: macos-latest
+    steps:
+      - name: Print OS
+        run: echo $OSTYPE
