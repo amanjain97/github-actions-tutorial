@@ -1,9 +1,14 @@
 name: Actions workflow
 
 on:
-  push:
-    paths:
-      - main.py
+  #  schedule:
+  #    # Min is 5minutes
+  #    - cron: "0/5 * * * *"
+  push
+  #    paths:
+  #      - *
+  repository_dispatch:
+    types: ["build"]
 
 jobs:
   run-shell-command:
@@ -11,7 +16,8 @@ jobs:
     steps:
       - name: Run shell command
         run: echo "hello world"
-
+      - name: Run command from payload from dispatch
+        run: echo ${{ github.event.client_payload.env }}
       - name: Run multiple shell command
         run: |
           echo "hello 2"
