@@ -1,6 +1,9 @@
 name: Actions workflow
 
-on: [push]
+on:
+  push:
+    paths:
+      - main.py
 
 jobs:
   run-shell-command:
