@@ -7,9 +7,20 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         node_version: [{v: 6, p: "version 6"}, {v: 8, p: "version 8"}, {v: 10, p: "version 8"} ]
+        include:
+          - os: ubuntu-latest
+            node_version: {v: 6, p: "version 6"}
+            is_ubuntu_8: "true"
+        exclude:
+          - os: ubuntu-latest
+            node_version: {v: 6, p: "version 6"}
+          - os: ubuntu-latest
+            node_version: {v: 8, p: "version 8"}
       fail-fast: true
       max-parallel: 2
     runs-on: ${{ matrix.os }}
+    env:
+      IS_UBUNTU_8: ${{ matrix.is_ubunutu_8 }}
     steps:
       - name: log node version
         run: node -v
@@ -17,7 +28,8 @@ jobs:
         with:
           node-version: ${{ matrix.node_version.v }}
       - name: Log node version
-        run: node -v
-      - name: print custom message
-        run: echo ${{ matrix.node_version.p }}
+        run: |
+          node -v
+          echo ${{ matrix.node_version.p }}
+          echo $IS_UBUNTU_8
 
