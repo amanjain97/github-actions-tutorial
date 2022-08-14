@@ -13,17 +13,20 @@ on:
 jobs:
   run-shell-command:
     runs-on: ubuntu-latest
+    timeout-minutes: 360 # number of min after which the job with expire
     steps:
       - name: Run shell command
         run: echo "hello world"
       - name: Run command from payload from dispatch
         run: echo ${{ github.event.client_payload.env }}
       - name: Run multiple shell command
+        continue-on-error: true
         run: |
           echo "hello 2"
           pwd
 
       - name: run on action
+        # if: failure()
         uses: actions/checkout@v3
 
   run-something-else:

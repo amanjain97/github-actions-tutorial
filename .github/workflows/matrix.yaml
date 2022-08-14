@@ -1,0 +1,20 @@
+name: matrix-example
+on: push
+
+jobs:
+  node-version:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [6,8,10]
+      fail-fast: true
+      max-parallel: 2
+    steps:
+      - name: log node version
+        run: node -v
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Log node version
+        run: node -v
+
